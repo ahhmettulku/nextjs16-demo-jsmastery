@@ -12,12 +12,10 @@ const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 const BookingSchema = new Schema<IBooking>(
   {
-    // Indexed for efficient look-ups by event; references the Event collection
     eventId: {
       type: Schema.Types.ObjectId,
       ref: "Event",
       required: [true, "eventId is required"],
-      index: true,
     },
 
     email: {
@@ -33,6 +31,13 @@ const BookingSchema = new Schema<IBooking>(
   },
   { timestamps: true }
 );
+
+// Prevents the same email from booking the same event more than once.
+// Also serves as a fast lookup index for (eventId, email) pair queries.
+BookingSchema.index({ eventId: 1, email: 1 }, { unique: true });
+
+// Supports efficient listing of bookings per event sorted by booking date (newest first).
+BookingSchema.index({ eventId: 1, createdAt: -1 });
 
 /**
  * Before persisting, confirm the referenced Event exists.
