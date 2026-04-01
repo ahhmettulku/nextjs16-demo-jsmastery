@@ -1,8 +1,29 @@
 import EventCard from "@/components/EventCard";
 import ExploreBtn from "@/components/ExploreBtn";
-import { events } from "@/lib/constants";
+import { IEvent } from "@/database";
 
-const HomePage = () => {
+const HomePage = async () => {
+  let response: Response;
+  try {
+    response = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_URL}/api/events`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      },
+    );
+  } catch {
+    throw new Error("Failed to reach the events service. Please try again.");
+  }
+
+  if (!response.ok) {
+    throw new Error(`Failed to load events (HTTP ${response.status}).`);
+  }
+
+  const events: IEvent[] = await response.json();
+
   return (
     <section>
       <h1 className="text-center">
@@ -16,11 +37,13 @@ const HomePage = () => {
       <div className="mt-20 space-y-7">
         <h3>Featured Events</h3>
         <ul className="events list-none">
-          {events.map((event) => (
-            <li key={event.title}>
-              <EventCard {...event} />
-            </li>
-          ))}
+          {events &&
+            events.length > 0 &&
+            events.map((event) => (
+              <li key={event.title}>
+                <EventCard {...event} />
+              </li>
+            ))}
         </ul>
       </div>
     </section>
