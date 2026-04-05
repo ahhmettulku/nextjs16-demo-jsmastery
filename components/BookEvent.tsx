@@ -6,12 +6,19 @@ const BookEvent = () => {
   const [email, setEmail] = useState("");
   const [submitted, setsubmitted] = useState(false);
 
+  const handleSubmit = (e: React.SubmitEvent) => {
+    e.preventDefault();
+    // Here you can handle the form submission, e.g., send the email to your server
+    setsubmitted(true);
+    console.log("Email submitted:", email);
+  };
+
   return (
     <div id="book-event">
       {submitted ? (
         <p className="text-sm">Thank you for signing up</p>
       ) : (
-        <form>
+        <form onSubmit={handleSubmit}>
           <div>
             <label htmlFor="email">Email Address</label>
             <input

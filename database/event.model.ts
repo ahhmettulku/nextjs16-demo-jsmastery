@@ -85,7 +85,7 @@ const EventSchema = new Schema<IEvent>(
       },
     },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 /** Converts a title to a URL-friendly slug, e.g. "Hello World!" → "hello-world" */
@@ -93,9 +93,9 @@ function toSlug(title: string): string {
   return title
     .toLowerCase()
     .trim()
-    .replace(/[^\w\s-]/g, "")   // remove non-word characters
-    .replace(/[\s_]+/g, "-")    // replace spaces/underscores with hyphens
-    .replace(/^-+|-+$/g, "");   // strip leading/trailing hyphens
+    .replace(/[^\w\s-]/g, "") // remove non-word characters
+    .replace(/[\s_]+/g, "-") // replace spaces/underscores with hyphens
+    .replace(/^-+|-+$/g, ""); // strip leading/trailing hyphens
 }
 
 /** Normalizes an input date string to ISO date format YYYY-MM-DD. */

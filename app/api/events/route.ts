@@ -1,5 +1,7 @@
 import { Event } from "@/database";
 import { connectToDatabase } from "@/lib/mongodb";
+
+import { revalidateTag } from "next/cache";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(request: NextRequest) {
@@ -13,6 +15,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Invalid form data" }, { status: 400 });
     }
     const createdEvent = await Event.create(event);
+    revalidateTag("events", "max");
     return NextResponse.json(createdEvent, { status: 201 });
   } catch (error) {
     console.error("Error connecting to database:", error);

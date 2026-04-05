@@ -1,19 +1,20 @@
 import EventCard from "@/components/EventCard";
 import ExploreBtn from "@/components/ExploreBtn";
 import { IEvent } from "@/database";
+import { cacheLife, cacheTag } from "next/cache";
 
 const HomePage = async () => {
+  "use cache";
+  cacheLife("hours");
+  cacheTag("events");
   let response: Response;
   try {
-    response = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_URL}/api/events`,
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
+    response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/events`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
       },
-    );
+    });
   } catch {
     throw new Error("Failed to reach the events service. Please try again.");
   }
