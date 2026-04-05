@@ -29,7 +29,7 @@ const BookingSchema = new Schema<IBooking>(
       },
     },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 // Prevents the same email from booking the same event more than once.
@@ -56,7 +56,6 @@ BookingSchema.pre("save", async function () {
 });
 
 const Booking: Model<IBooking> =
-  mongoose.models.Booking ??
-  mongoose.model<IBooking>("Booking", BookingSchema);
+  mongoose.models.Booking ?? mongoose.model<IBooking>("Booking", BookingSchema);
 
 export default Booking;
