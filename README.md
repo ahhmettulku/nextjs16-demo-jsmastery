@@ -23,6 +23,16 @@ The app demonstrates an event platform where data is fetched and rendered with N
   - `PUT /api/events/[slug]` updates an event and revalidates the `event-${slug}` tag.
 - **Handle errors and not-found states:** dedicated route-level error boundaries and `not-found` files are included under `app/`.
 
+## Preview
+
+**Homepage** — featured event list, cached with `cacheTag("events")` and `cacheLife("hours")`:
+
+![Homepage](public/images/homepage.png)
+
+**Event Details** — per-event page, cached with `cacheTag(\`event-${slug}\`)` and `cacheLife("days")`:
+
+![Event Details](public/images/event-details.png)
+
 ## Project Structure
 
 ```text
