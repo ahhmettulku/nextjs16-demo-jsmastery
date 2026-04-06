@@ -8,8 +8,8 @@ const BookEvent = ({ eventId }: { eventId: string }) => {
   const [submitted, setsubmitted] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const handleSubmit = async (e: React.SubmitEvent) => {
-    e.preventDefault();
+  const handleSubmit = async () => {
+    // e.preventDefault();
     setError(null);
 
     const result = await createBooking({ email, eventId });
@@ -28,7 +28,7 @@ const BookEvent = ({ eventId }: { eventId: string }) => {
       {submitted ? (
         <p className="text-sm">Thank you for signing up</p>
       ) : (
-        <form onSubmit={handleSubmit}>
+        <form action={handleSubmit}>
           <div>
             <label htmlFor="email">Email Address</label>
             <input
